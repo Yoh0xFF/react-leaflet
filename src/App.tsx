@@ -1,9 +1,9 @@
-import "./App.css";
-import Map from "./map/Map";
+import './App.css';
+import Map from './map/Map';
 
 export default function App() {
   return (
-    <div className="App">
+    <div className='App'>
       <Map />
     </div>
   );

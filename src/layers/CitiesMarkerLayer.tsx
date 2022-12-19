@@ -1,4 +1,4 @@
-import { Marker, Popup } from "react-leaflet";
+import { Marker, Popup } from 'react-leaflet';
 
 interface Props {
   data: GeoJSON.FeatureCollection;
@@ -8,7 +8,7 @@ export default function CitiesMarkerLayer({ data }: Props) {
   return (
     <>
       {data.features.map((x: GeoJSON.Feature) => {
-        if (x.geometry.type !== "Point") {
+        if (x.geometry.type !== 'Point') {
           return <></>;
         }
         const { coordinates } = x.geometry;

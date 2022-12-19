@@ -1,9 +1,17 @@
 import { MapContainer, TileLayer } from "react-leaflet";
-import { cities } from "../data/cities";
+import useSWR from "swr";
 import CitiesMarkerLayer from "../layers/CitiesMarkerLayer";
 import "./Map.css";
 
 export default function Map() {
+  const { data: cities } = useSWR<GeoJSON.FeatureCollection>(
+    "/populated-places-simple.geojson"
+  );
+
+  if (cities == null) {
+    return <div>Data not found</div>;
+  }
+
   return (
     <MapContainer center={[0, 0]} zoom={1} scrollWheelZoom={false}>
       <TileLayer

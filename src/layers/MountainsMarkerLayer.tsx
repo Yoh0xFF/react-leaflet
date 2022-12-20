@@ -27,10 +27,14 @@ export default function MountainsMarkerLayer({ data }: Props) {
             }}
           >
             <Tooltip>
-              <h3>Mt. {name}</h3>
-              Continent: <b>{continent}</b>
+              <h6>Mt. {name}</h6>
+              <span>
+                Continent: <b>{continent}</b>
+              </span>
               <br />
-              Elevation: <b>{elevation} m.</b>
+              <span>
+                Elevation: <b>{elevation} m.</b>
+              </span>
             </Tooltip>
           </Marker>
         );

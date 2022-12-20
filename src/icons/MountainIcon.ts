@@ -1,6 +1,5 @@
 import L from 'leaflet';
-
-import MountainIconImg from '../assets/mountain.png';
+import MountainIconImg from '~/assets/mountain.png';
 
 const MountainIcon = L.icon({
   iconUrl: MountainIconImg,

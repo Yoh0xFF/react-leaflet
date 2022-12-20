@@ -1,4 +1,5 @@
 import { Marker, Popup } from 'react-leaflet';
+import DefaultIcon from '~/icons/DefaultIcon';
 
 interface Props {
   data: GeoJSON.FeatureCollection;
@@ -17,6 +18,7 @@ export default function CitiesMarkerLayer({ data }: Props) {
           <Marker
             key={String(coordinates)}
             position={[coordinates[1], coordinates[0]]}
+            icon={DefaultIcon}
           >
             <Popup>
               A pretty CSS3 popup. <br /> Easily customizable.

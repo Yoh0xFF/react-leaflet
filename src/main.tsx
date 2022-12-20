@@ -10,7 +10,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <SWRConfig
       value={{
         suspense: true,
-        //refreshInterval: 2000,
         fetcher: (resource, init) =>
           fetch(resource, init).then((res) => res.json()),
       }}

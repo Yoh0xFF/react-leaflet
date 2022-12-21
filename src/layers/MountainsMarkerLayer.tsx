@@ -11,10 +11,7 @@ export default function MountainsMarkerLayer({ data }: Props) {
   return (
     <>
       {data.features.map((x: GeoJSON.Feature) => {
-        if (x.geometry.type !== 'Point') {
-          return <></>;
-        }
-        const { coordinates } = x.geometry;
+        const { coordinates } = x.geometry as GeoJSON.Point;
         const { name, elevation, continent } = x.properties as any;
 
         return (

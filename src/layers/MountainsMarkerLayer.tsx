@@ -1,8 +1,9 @@
+import { Feature, FeatureCollection, Point } from 'geojson';
 import { Marker, Tooltip, useMap } from 'react-leaflet';
 import MountainIcon from '~/icons/MountainIcon';
 
 interface Props {
-  data: GeoJSON.FeatureCollection;
+  data: FeatureCollection;
 }
 
 export default function MountainsMarkerLayer({ data }: Props) {
@@ -10,8 +11,8 @@ export default function MountainsMarkerLayer({ data }: Props) {
 
   return (
     <>
-      {data.features.map((x: GeoJSON.Feature) => {
-        const { coordinates } = x.geometry as GeoJSON.Point;
+      {data.features.map((x: Feature) => {
+        const { coordinates } = x.geometry as Point;
         const { name, elevation, continent } = x.properties as any;
 
         return (

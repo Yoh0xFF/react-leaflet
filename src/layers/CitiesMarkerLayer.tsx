@@ -1,3 +1,5 @@
+import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
+import { Feature, FeatureCollection, MultiPolygon, Point } from 'geojson';
 import L from 'leaflet';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Button, Card, Col, Form, ListGroup, Row } from 'react-bootstrap';
@@ -6,19 +8,21 @@ import DefaultIcon from '~/icons/DefaultIcon';
 import { RadiusFilter } from '~/map/Map';
 
 interface Props {
-  data: GeoJSON.FeatureCollection;
-  radiusFilter: RadiusFilter | null;
-  setRadiusFilter: Dispatch<SetStateAction<RadiusFilter | null>>;
+  data: FeatureCollection;
+  radiusFilter?: RadiusFilter;
+  setRadiusFilter: Dispatch<SetStateAction<RadiusFilter | undefined>>;
+  geoFilter?: Feature;
 }
 
 export default function CitiesMarkerLayer({
   data,
   radiusFilter,
   setRadiusFilter,
+  geoFilter,
 }: Props) {
   let centerPoint: L.LatLng;
   if (radiusFilter) {
-    const { coordinates } = radiusFilter.feature.geometry as GeoJSON.Point;
+    const { coordinates } = radiusFilter.feature.geometry as Point;
     centerPoint = L.latLng(coordinates[1], coordinates[0]);
   }
 
@@ -26,18 +30,35 @@ export default function CitiesMarkerLayer({
     <>
       {data.features
         .filter((x) => {
-          if (!radiusFilter || !centerPoint) {
-            return true;
+          let filterByRadius = false;
+          let filterByGeo = false;
+
+          if (radiusFilter && centerPoint) {
+            const { coordinates } = x.geometry as Point;
+            const currentPoint = L.latLng(coordinates[1], coordinates[0]);
+            filterByRadius =
+              centerPoint.distanceTo(currentPoint) / 1000 < radiusFilter.radius;
           }
 
-          const { coordinates } = x.geometry as GeoJSON.Point;
-          const currentPoint = L.latLng(coordinates[1], coordinates[0]);
-          return (
-            centerPoint.distanceTo(currentPoint) / 1000 < radiusFilter.radius
-          );
+          if (geoFilter) {
+            filterByGeo = booleanPointInPolygon(
+              x.geometry as Point,
+              geoFilter.geometry as MultiPolygon
+            );
+          }
+
+          if (radiusFilter && geoFilter) {
+            return filterByRadius && filterByGeo;
+          } else if (radiusFilter && !geoFilter) {
+            return filterByRadius;
+          } else if (!radiusFilter && geoFilter) {
+            return filterByGeo;
+          } else {
+            return true;
+          }
         })
-        .map((x: GeoJSON.Feature) => {
-          const { coordinates } = x.geometry as GeoJSON.Point;
+        .map((x: Feature) => {
+          const { coordinates } = x.geometry as Point;
 
           return (
             <Marker
@@ -62,8 +83,8 @@ function PopupStatistics({
   feature,
   setRadiusFilter,
 }: {
-  feature: GeoJSON.Feature;
-  setRadiusFilter: Dispatch<SetStateAction<RadiusFilter | null>>;
+  feature: Feature;
+  setRadiusFilter: Dispatch<SetStateAction<RadiusFilter | undefined>>;
 }) {
   const [validated, setValidated] = useState(false);
   const [disabled, setDisabled] = useState(false);
@@ -105,9 +126,9 @@ function PopupStatistics({
                 variant='primary'
                 disabled={disabled}
                 onClick={() =>
-                  setRadiusFilter((prevState: RadiusFilter | null) => {
+                  setRadiusFilter((prevState: RadiusFilter | undefined) => {
                     if (radius === 0) {
-                      return prevState ? prevState : null;
+                      return prevState ? prevState : undefined;
                     }
 
                     if (prevState) {
@@ -116,7 +137,7 @@ function PopupStatistics({
 
                       return !sameFeature || !sameRadius
                         ? { feature, radius }
-                        : null;
+                        : undefined;
                     }
 
                     return { feature, radius };

@@ -1,6 +1,6 @@
 import { Feature, FeatureCollection } from 'geojson';
 import { Dispatch, SetStateAction } from 'react';
-import { GeoJSON } from 'react-leaflet';
+import { GeoJSON, LayerGroup, LayersControl } from 'react-leaflet';
 
 interface Props {
   data: FeatureCollection;
@@ -13,7 +13,7 @@ export default function ContinentsLayer({
   geoFilter,
   setGeoFilter,
 }: Props) {
-  return (
+  const layer = (
     <GeoJSON
       key='continents-layer'
       data={data}
@@ -32,5 +32,11 @@ export default function ContinentsLayer({
         };
       }}
     />
+  );
+
+  return (
+    <LayersControl.Overlay checked name='Continents'>
+      <LayerGroup>{layer}</LayerGroup>
+    </LayersControl.Overlay>
   );
 }

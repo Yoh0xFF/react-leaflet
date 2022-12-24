@@ -3,7 +3,7 @@ import { Feature, FeatureCollection, MultiPolygon, Point } from 'geojson';
 import L from 'leaflet';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Button, Card, Col, Form, ListGroup, Row } from 'react-bootstrap';
-import { Marker, Popup } from 'react-leaflet';
+import { LayerGroup, LayersControl, Marker, Popup } from 'react-leaflet';
 import DefaultIcon from '~/icons/DefaultIcon';
 import { RadiusFilter } from '~/map/Map';
 
@@ -26,7 +26,7 @@ export default function CitiesMarkerLayer({
     centerPoint = L.latLng(coordinates[1], coordinates[0]);
   }
 
-  return (
+  const layer = (
     <>
       {data.features
         .filter((x) => {
@@ -62,9 +62,10 @@ export default function CitiesMarkerLayer({
 
           return (
             <Marker
-              key={String(coordinates)}
+              key={`world-city-${String(coordinates)}`}
               position={[coordinates[1], coordinates[0]]}
               icon={DefaultIcon}
+              alt='World city'
             >
               <Popup>
                 <PopupStatistics
@@ -76,6 +77,12 @@ export default function CitiesMarkerLayer({
           );
         })}
     </>
+  );
+
+  return (
+    <LayersControl.Overlay checked name='World Cities'>
+      <LayerGroup>{layer}</LayerGroup>
+    </LayersControl.Overlay>
   );
 }
 

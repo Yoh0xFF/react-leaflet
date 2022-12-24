@@ -1,5 +1,11 @@
 import { Feature, FeatureCollection, Point } from 'geojson';
-import { Marker, Tooltip, useMap } from 'react-leaflet';
+import {
+  LayerGroup,
+  LayersControl,
+  Marker,
+  Tooltip,
+  useMap,
+} from 'react-leaflet';
 import MountainIcon from '~/icons/MountainIcon';
 
 interface Props {
@@ -9,7 +15,7 @@ interface Props {
 export default function MountainsMarkerLayer({ data }: Props) {
   const leafletMap = useMap();
 
-  return (
+  const layer = (
     <>
       {data.features.map((x: Feature) => {
         const { coordinates } = x.geometry as Point;
@@ -38,5 +44,11 @@ export default function MountainsMarkerLayer({ data }: Props) {
         );
       })}
     </>
+  );
+
+  return (
+    <LayersControl.Overlay checked name='Highest Points'>
+      <LayerGroup>{layer}</LayerGroup>
+    </LayersControl.Overlay>
   );
 }

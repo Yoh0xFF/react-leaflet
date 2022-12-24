@@ -1,7 +1,8 @@
 import { Feature, FeatureCollection } from 'geojson';
 import { useState } from 'react';
-import { MapContainer, TileLayer } from 'react-leaflet';
+import { LayersControl, MapContainer, TileLayer } from 'react-leaflet';
 import useSWR from 'swr';
+import { FitBoundToDataControl } from '~/controls/FitBoundToDataControl';
 import CitiesMarkerLayer from '~/layers/CitiesMarkerLayer';
 import ContinentsLayer from '~/layers/ContinentsLayer';
 import MountainsMarkerLayer from '~/layers/MountainsMarkerLayer';
@@ -30,35 +31,42 @@ export default function Map() {
 
   return (
     <MapContainer center={[0, 0]} zoom={1} scrollWheelZoom={false}>
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-      />
-      {cities && (
-        <CitiesMarkerLayer
-          data={cities}
-          radiusFilter={radiusFilter}
-          setRadiusFilter={setRadiusFilter}
-          geoFilter={geoFilter}
-        />
-      )}
+      <FitBoundToDataControl />
 
-      {mountains && <MountainsMarkerLayer data={mountains} />}
+      <LayersControl position='topright'>
+        <LayersControl.BaseLayer checked name='Open Street Maps Layer'>
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+          />
+        </LayersControl.BaseLayer>
 
-      {continents && (
-        <ContinentsLayer
-          data={continents}
-          geoFilter={geoFilter}
-          setGeoFilter={setGeoFilter}
-        />
-      )}
+        {cities && (
+          <CitiesMarkerLayer
+            data={cities}
+            radiusFilter={radiusFilter}
+            setRadiusFilter={setRadiusFilter}
+            geoFilter={geoFilter}
+          />
+        )}
 
-      {radiusFilter && (
-        <RadiusFilterCircle
-          radiusFilter={radiusFilter}
-          setRadiusFilter={setRadiusFilter}
-        />
-      )}
+        {mountains && <MountainsMarkerLayer data={mountains} />}
+
+        {continents && (
+          <ContinentsLayer
+            data={continents}
+            geoFilter={geoFilter}
+            setGeoFilter={setGeoFilter}
+          />
+        )}
+
+        {radiusFilter && (
+          <RadiusFilterCircle
+            radiusFilter={radiusFilter}
+            setRadiusFilter={setRadiusFilter}
+          />
+        )}
+      </LayersControl>
     </MapContainer>
   );
 }

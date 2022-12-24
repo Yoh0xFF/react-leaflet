@@ -1,6 +1,6 @@
 import { Point } from 'geojson';
 import { Dispatch, SetStateAction } from 'react';
-import { Circle } from 'react-leaflet';
+import { Circle, LayerGroup, LayersControl } from 'react-leaflet';
 import { RadiusFilter } from '~/map/Map';
 
 interface Props {
@@ -14,7 +14,7 @@ export default function RadiusFilterCircle({
 }: Props) {
   const { coordinates } = radiusFilter.feature.geometry as Point;
 
-  return (
+  const layer = (
     <Circle
       center={[coordinates[1], coordinates[0]]}
       radius={radiusFilter.radius * 1000}
@@ -28,5 +28,11 @@ export default function RadiusFilterCircle({
         },
       }}
     />
+  );
+
+  return (
+    <LayersControl.Overlay checked name='Radius Filter'>
+      <LayerGroup>{layer}</LayerGroup>
+    </LayersControl.Overlay>
   );
 }

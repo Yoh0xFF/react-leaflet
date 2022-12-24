@@ -30,7 +30,12 @@ export default function Map() {
   const [geoFilter, setGeoFilter] = useState<Feature | undefined>(undefined);
 
   return (
-    <MapContainer center={[0, 0]} zoom={1} scrollWheelZoom={false}>
+    <MapContainer
+      center={[0, 0]}
+      zoom={2}
+      scrollWheelZoom={false}
+      worldCopyJump={true}
+    >
       <FitBoundToDataControl />
 
       <LayersControl position='topright'>

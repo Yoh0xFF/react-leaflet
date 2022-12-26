@@ -51,8 +51,8 @@ function ActiveFiltersList({
       <ListGroup.Item>
         <h6>Active Filters</h6>
       </ListGroup.Item>
-      {filtersToDisplay.map((x) => (
-        <ListGroup.Item>{x}</ListGroup.Item>
+      {filtersToDisplay.map((x, k) => (
+        <ListGroup.Item key={k}>{x}</ListGroup.Item>
       ))}
     </ListGroup>
   );

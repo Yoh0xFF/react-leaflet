@@ -35,7 +35,7 @@ export default function ContinentsLayer({
   );
 
   return (
-    <LayersControl.Overlay checked name='Continents'>
+    <LayersControl.Overlay name='Continents'>
       <LayerGroup>{layer}</LayerGroup>
     </LayersControl.Overlay>
   );

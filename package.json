@@ -13,6 +13,7 @@
     "@turf/boolean-point-in-polygon": "6.5.0",
     "bootstrap": "5.2.3",
     "bootstrap-icons": "1.10.2",
+    "gh-pages": "4.0.0",
     "leaflet": "1.9.3",
     "react": "18.2.0",
     "react-bootstrap": "2.7.0",

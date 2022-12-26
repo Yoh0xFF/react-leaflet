@@ -80,7 +80,7 @@ export default function CitiesMarkerLayer({
   );
 
   return (
-    <LayersControl.Overlay name='World Cities'>
+    <LayersControl.Overlay checked name='World Cities'>
       <LayerGroup>{layer}</LayerGroup>
     </LayersControl.Overlay>
   );

@@ -47,7 +47,7 @@ export default function MountainsMarkerLayer({ data }: Props) {
   );
 
   return (
-    <LayersControl.Overlay name='Highest Points'>
+    <LayersControl.Overlay checked name='Highest Points'>
       <LayerGroup>{layer}</LayerGroup>
     </LayersControl.Overlay>
   );

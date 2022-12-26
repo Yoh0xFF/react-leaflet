@@ -31,7 +31,7 @@ export default function RadiusFilterCircle({
   );
 
   return (
-    <LayersControl.Overlay name='Radius Filter'>
+    <LayersControl.Overlay checked name='Radius Filter'>
       <LayerGroup>{layer}</LayerGroup>
     </LayersControl.Overlay>
   );

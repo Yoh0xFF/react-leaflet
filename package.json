@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "gh-pages -d build -u 'github-actions-bot <support+actions@github.com>'"
   },
   "dependencies": {
     "@turf/boolean-point-in-polygon": "6.5.0",

@@ -1,2 +1,5 @@
-# react-leaflet
-Sample application to demonstrate using the Leaflet library with the React SPA.
+# React Leaflet
+
+This project is written by following the [React Leaflet](https://www.udemy.com/course/react-leaflet-with-hooks/) course on Udemy.
+
+It demonstrates creating an interactive map using the [Leaflet](https://leafletjs.com/) library with [React Leaflet](https://react-leaflet.js.org/) wrapper.

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { LayersControl, MapContainer, TileLayer } from 'react-leaflet';
 import useSWR from 'swr';
 import { FitBoundToDataControl } from '~/controls/FitBoundToDataControl';
+import ShowActiveFiltersControl from '~/controls/ShowActiveFiltersControl';
 import CitiesMarkerLayer from '~/layers/CitiesMarkerLayer';
 import ContinentsLayer from '~/layers/ContinentsLayer';
 import MountainsMarkerLayer from '~/layers/MountainsMarkerLayer';
@@ -37,6 +38,10 @@ export default function Map() {
       worldCopyJump={true}
     >
       <FitBoundToDataControl />
+      <ShowActiveFiltersControl
+        radiusFilter={radiusFilter}
+        geoFilter={geoFilter}
+      />
 
       <LayersControl position='topright'>
         <LayersControl.BaseLayer checked name='Open Street Maps Layer'>

@@ -18,12 +18,12 @@ export interface RadiusFilter {
 
 export default function Map() {
   const { data: cities } = useSWR<FeatureCollection>(
-    '/populated-places-simple.geojson'
+    'populated-places-simple.geojson'
   );
   const { data: mountains } = useSWR<FeatureCollection>(
-    '/highest-points.geojson'
+    'highest-points.geojson'
   );
-  const { data: continents } = useSWR<FeatureCollection>('/continents.geojson');
+  const { data: continents } = useSWR<FeatureCollection>('continents.geojson');
 
   const [radiusFilter, setRadiusFilter] = useState<RadiusFilter | undefined>(
     undefined
